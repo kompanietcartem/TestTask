@@ -1,0 +1,6 @@
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Client\Client\bin\Debug\Client.exe.config
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Client\Client\bin\Debug\Client.exe
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Client\Client\bin\Debug\Client.pdb
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Client\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Client\Client\obj\Debug\Client.exe
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Client\Client\obj\Debug\Client.pdb

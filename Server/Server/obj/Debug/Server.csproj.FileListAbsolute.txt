@@ -1,0 +1,6 @@
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Server\Server\bin\Debug\Server.exe.config
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Server\Server\bin\Debug\Server.exe
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Server\Server\bin\Debug\Server.pdb
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Server\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Server\Server\obj\Debug\Server.exe
+D:\@ !!! АрТёМ !!! @\Прога\C#\Система тестовое\Server\Server\obj\Debug\Server.pdb
