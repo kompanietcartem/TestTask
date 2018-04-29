@@ -13,8 +13,12 @@ namespace Client
 
         static void Main(string[] args)
         {
-            Task t = StartClient();
-            t.Wait();
+            while (true)
+            {
+                Task t = StartClient();
+                t.Wait();
+                t.Dispose();
+            }
         }
 
         static async Task StartClient()
@@ -23,12 +27,14 @@ namespace Client
             try
             {
                 NetworkStream stream = await ConnectToServer(client);
-                await WorkWithServer(stream);
+                Task read = ReadStream(stream);
+                Task write = WriteStream(stream);
+                write.Wait();
+                read.Wait();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                StartClient();
             }
             finally
             {
@@ -54,23 +60,31 @@ namespace Client
             }
         }
 
-        static async Task WorkWithServer(NetworkStream stream)
+        static async Task WriteStream(NetworkStream stream)
         {
             while (true)
             {
                 string message = Console.ReadLine();
                 byte[] data = Encoding.Unicode.GetBytes(message);
                 await stream.WriteAsync(data, 0, data.Length);
+                Console.WriteLine("Сообщение отправлено");
+            }
+        }
 
-                data = new byte[data.Length];
-                string response;
+        static async Task ReadStream(NetworkStream stream)
+        {
+            while (true)
+            {
+                int bytes = 0;
+                byte[] data = new byte[512];
+                StringBuilder message = new StringBuilder();
                 do
                 {
-                    await stream.ReadAsync(data, 0, data.Length);
-                    response = Encoding.Unicode.GetString(data);
+                    bytes = await stream.ReadAsync(data, 0, data.Length);
+                    message.Append(Encoding.Unicode.GetString(data, 0, bytes));
                 }
                 while (stream.DataAvailable);
-                Console.WriteLine($"Ответ сервера: {response}");
+                Console.WriteLine($"Сообщение от сервера: {message.ToString()}");
             }
         }
     }

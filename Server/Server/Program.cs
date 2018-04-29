@@ -13,7 +13,7 @@ namespace Server
 
         static void Main(string[] args)
         {
-            Task t = StartServerAsync();
+            StartServerAsync();
             Console.ReadLine();
         }
 
@@ -55,14 +55,21 @@ namespace Server
                 {
                     while (client.Connected)
                     {
+                        int bytes = 0;
                         byte[] data = new byte[512];
-                        await stream.ReadAsync(data, 0, data.Length);
-                        string message = Encoding.Unicode.GetString(data).Trim(new char[] { '\0' });
-                        Console.WriteLine($"Получено сообщение: {message}");
+                        StringBuilder message = new StringBuilder();
 
-                        data = Encoding.Unicode.GetBytes(message.Reverse().ToArray());
-                        await stream.WriteAsync(data, 0, data.Length);
-                        Console.WriteLine("Ответ отправлен");
+                        do
+                        {
+                            bytes = await stream.ReadAsync(data, 0, data.Length);
+                            message.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                        }
+                        while (stream.DataAvailable);
+
+                        Console.WriteLine($"Получено сообщение: {message.ToString()}");
+
+                        data = Encoding.Unicode.GetBytes(message.ToString().Reverse().ToArray());
+                        WriteStreamAsync(stream, data);
                     }
                 }
             }
@@ -72,6 +79,21 @@ namespace Server
             }
             finally
             {
+                if (stream != null)
+                    stream.Dispose();
+            }
+        }
+
+        static async Task WriteStreamAsync(NetworkStream stream, byte[] message)
+        {
+            try
+            {
+                await stream.WriteAsync(message, 0, message.Length);
+                Console.WriteLine("Ответ отправлен");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 if (stream != null)
                     stream.Dispose();
             }
